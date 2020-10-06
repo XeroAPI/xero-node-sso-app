@@ -64,7 +64,8 @@ class App {
       saveUninitialized: true
     }));
 
-    sequelize.sync({force: true}).then(async() => {
+    // add {force: true} to reset db every time
+    sequelize.sync().then(async() => {
       this.app.listen(process.env.PORT, () => {
         console.log(`Example app listening on port ${process.env.PORT}!`)
       });
@@ -85,7 +86,9 @@ class App {
 
     router.get("/dashboard", async (req: Request, res: Response) => {
       if (req.signedCookies.recentSession){
+        console.log('req.signedCookies.recentSession: ',req.signedCookies.recentSession)
         const user = await findUserWithSession(req.signedCookies.recentSession)
+        console.log('user: ',user)
 
         if (!user) {
           // user has logged in on different device
@@ -110,11 +113,12 @@ class App {
 
         const recentSession = uuid()
         const user = await User.findOne({where: { email: decodedIdToken.email }})
+        const address = orgDetails.body.organisations[0].addresses[0]
 
         const userParams = {
           firstName: decodedIdToken.given_name,
           lastName: decodedIdToken.family_name,
-          address: orgDetails.body.organisations[0].addresses[0].postalCode,
+          address: address ? address.postalCode : '',
           email: decodedIdToken.email,
           xero_userid: decodedIdToken.xero_userid,
           decoded_id_token: decodedIdToken,
@@ -124,20 +128,22 @@ class App {
         }
 
         if (user) {
-          user.update(userParams).then(updatedRecord => {
-            console.log(`UPDATED record ${JSON.stringify(updatedRecord,null,2)}`)
+          await user.update(userParams).then(updatedRecord => {
+            console.log(`UPDATED record ${JSON.stringify(updatedRecord.email,null,2)}`)
             return updatedRecord
           })
         } else {
-          User.create(userParams).then(createdRecord => {
-            console.log(`CREATED record ${JSON.stringify(createdRecord,null,2)}`)
+          await User.create(userParams).then(createdRecord => {
+            console.log(`CREATED record ${JSON.stringify(createdRecord.email,null,2)}`)
             return createdRecord
           })
         }
         res.cookie('recentSession', recentSession, { signed: true, maxAge: 1 * 60 * 60 * 1000 }) // 1 hour
 
+        const createdOrUpdatedUser = await User.findOne({where: { email: decodedIdToken.email }})
+        
         res.render("dashboard", {
-          user
+          user: createdOrUpdatedUser
         });
       } catch (e) {
         res.status(res.statusCode);

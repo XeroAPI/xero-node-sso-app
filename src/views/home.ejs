@@ -14,51 +14,12 @@
 <html lang="en">
   <%- include('./header') -%>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light xlp-bg-primary-color xlp-navbar-light">
-      <a class="navbar-brand xlp-navbar-brand" href="#">Logoipsum</a>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <button
-              type="button"
-              class="btn btn-light xlp-btn-light xlp-bg-primary-color xlp-navbar-buttons"
-            >
-              GET MY APP
-            </button>
-          </li>
-          <li class="nav-item active">
-            <button
-              type="button"
-              class="btn btn-light xlp-btn-light xlp-bg-primary-color xlp-navbar-buttons"
-            >
-              FEATURES
-            </button>
-          </li>
-          <li class="nav-item active">
-            <button
-              type="button"
-              class="btn btn-light xlp-btn-light xlp-bg-primary-color xlp-navbar-buttons"
-            >
-              ABOUT XERO
-            </button>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
     <section id="app-logo">
       <div class="container xlp-container">
         <div class="row justify-content-between">
-          <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5 col-5 d-flex align-items-center">
-            <img src="/images/logo-ipsum.png" class="img-fluid" alt="app-logo"/>
-          </div>
-          <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5 col-5">
-            <img
-              src="/images/connected-app.svg"
-              class="img-fluid"
-              alt="xero-app-partner-logo"
-            />
-          </div>
+          <div class="col-md-12">
+            <img src="/images/logo-ipsum.png" style="max-width: 200px; margin: 25px; float: left;" class="img-fluid" alt="app-logo"/>
+            <img src="/images/connected-app.svg" style="max-width: 200px; float: right;" class="img-fluid" alt="xero-app-partner-logo"/>
         </div>
       </div>
     </section>
@@ -66,78 +27,17 @@
     <section id="key-benefit">
       <div class="container">
         <div class="jumbotron xlp-jumbotron">
-          <div class="xlp-jumbotron-text">
+          <div class="xlp-jumbotron-text text-center">
             <h1 class="display-5">
-              App + Xero: Key benefit (H1, 60 chars/2 lines)
+              Create account
             </h1>
             <p class="lead">
-              Joint value proposition. Your joint value proposition is your
-              elevator pitch, summarising why customers would choose your app +
-              Xero, how they solve the customer’s problems or challenges, and
-              the specific benefit/s they deliver. ( 2-4 lines.)
+              Sign up with Xero and your accounting data will populate your new account
             </p>
-            <div class="row justify-content-start">
-              <div class="col-lg-3 col-6 col-md-5 col-sm-6 col-xs-6">
-                <a
-                  class="btn btn-secondary xlp-btn-app-cta"
-                  href="#"
-                  role="button"
-                  >Get MyApp</a
-                >
-              </div>
-              <div class="col-lg-3 col-6 col-md-5 col-sm-6 col-xs-6">
-                <a
-                  class="btn btn-secondary xlp-btn-xero-cta"
-                  href="https://xero.com/signup/?xtid=x30myapp"
-                  role="button"
-                  >Try Xero for Free</a
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="app-img">
-      <div class="container xlp-container">
-        <div class="row">
-          <div class="col-lg-6 col-md-6">
-            <div class="text-center">
-              <img
-                src="/images/myapp-screenshot.png"
-                class="img-fluid xlp-v-align"
-                alt="xero-app-partner-logo"
-              />
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-6">
-            <div class="text-center d-sm-none d-none d-md-block d-lg-block">
-              <img
-                src="/images/xero-screenshot.png"
-                class="img-fluid xlp-v-align"
-                alt="xero-app-partner-logo"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-    <section id="footer" class="text-white xlp-bg-primary-color">
-      <div class="container xlp-container">
-        <div class="row justify-content-between">
-          <div class="col-lg-6 col-md-4 col-sm-12 col-12">
-            <p id="xlp-footer-copyright" class="xlp-v-align">My App 2019</p>
-          </div>
-          <div class="col-lg-6 col-md-8 col-sm-12 col-12">
-            <div class="row justify-content-between">
-              <div class="col-7">
-              </div>
-              <div class="col-5">
-                <a class="btn btn-secondary xlp-btn-xero-cta" href="https://xero.com/signup/?xtid=x30myapp" role="button" >Try Xero for Free</a>
-              </div>
+            <hr>
+            <div class="row text-center">
+              <span style="margin: 0 auto; margin-top: 50px;" data-xero-sso data-theme="dark" data-href='<%= authorizeUrl %>' data-size="large" data-height="60" data-label="Sign in with Xero"></span>
+              <script src="https://edge.xero.com/platform/sso/xero-sso.js" async defer></script>
             </div>
           </div>
         </div>
