@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <%- include('./header') -%>
+      <title>Logo Ipsum & Xero Integration</title>
+      <!-- Required meta tags -->
+      <meta charset="utf-8" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no"
+      />
+  
+      <!-- Bootstrap CSS -->
+      <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous"
+      />
+  
+      <!-- Xero App Partner Landing Page Custom SCSS -->
+      <link rel="stylesheet" href="./css/custom.css" />
+    </head>
+    <body>
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"
+      ></script>
+      <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"
+      ></script>
+      <script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"
+      ></script>
+  
+      <nav
+        class="navbar navbar-expand-lg navbar-light xlp-bg-primary-color xlp-navbar-light"
+      >
+        <a class="navbar-brand xlp-navbar-brand" href="#">MyApp</a>
+        <button
+          class="navbar-toggler xlp-navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+  
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <button
+                type="button"
+                class="btn btn-light xlp-btn-light xlp-bg-primary-color xlp-navbar-buttons"
+              >
+                GET MY APP
+              </button>
+            </li>
+            <li class="nav-item active">
+              <button
+                type="button"
+                class="btn btn-light xlp-btn-light xlp-bg-primary-color xlp-navbar-buttons"
+              >
+                FEATURES
+              </button>
+            </li>
+            <li class="nav-item active">
+              <button
+                type="button"
+                class="btn btn-light xlp-btn-light xlp-bg-primary-color xlp-navbar-buttons"
+              >
+                ABOUT XERO
+              </button>
+            </li>
+          </ul>
+        </div>
+      </nav>
+  
+      <section id="app-logo">
+        <div class="container xlp-container">
+          <div class="row justify-content-between">
+            <div
+              class="col-xl-3 col-lg-3 col-md-4 col-sm-5 col-5 d-flex align-items-center"
+            >
+              <img
+                src="/AppLogo.svg"
+                class="img-fluid"
+                alt="app-logo"
+              />
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5 col-5">
+              <img
+                src="/images/logos/logo_Xero App Partner Connected Badge.svg"
+                class="img-fluid"
+                alt="xero-app-partner-logo"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section id="key-benefit">
+        <div class="container">
+          <div class="jumbotron xlp-jumbotron">
+            <div class="xlp-jumbotron-text">
+              <h1 class="display-5">
+                App + Xero: Key benefit (H1, 60 chars/2 lines)
+              </h1>
+              <p class="lead">
+                Joint value proposition. Your joint value proposition is your
+                elevator pitch, summarising why customers would choose your app +
+                Xero, how they solve the customer’s problems or challenges, and
+                the specific benefit/s they deliver. ( 2-4 lines.)
+              </p>
+              <div class="row justify-content-start">
+                <div class="col-lg-3 col-6 col-md-5 col-sm-6 col-xs-6">
+                  <a
+                    class="btn btn-secondary xlp-btn-app-cta"
+                    href="#"
+                    role="button"
+                    >Get MyApp</a
+                  >
+                </div>
+                <div class="col-lg-3 col-6 col-md-5 col-sm-6 col-xs-6">
+                  <a
+                    class="btn btn-secondary xlp-btn-xero-cta"
+                    href="https://xero.com/signup/?xtid=x30myapp"
+                    role="button"
+                    >Try Xero for Free</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section id="app-img">
+        <div class="container xlp-container">
+          <div class="row">
+            <div class="col-lg-6 col-md-6">
+              <div class="text-center">
+                <img
+                  src="/images/myapp-screenshot.png"
+                  class="img-fluid xlp-v-align"
+                  alt="xero-app-partner-logo"
+                />
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <div class="text-center d-sm-none d-none d-md-block d-lg-block">
+                <img
+                  src="/images/xero-screenshot.png"
+                  class="img-fluid xlp-v-align"
+                  alt="xero-app-partner-logo"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section id="why-connect-app-to-xero">
+        <div class="container xlp-container">
+          <div class="row">
+            <div class="col-lg-6">
+              <div
+                class="d-none d-lg-block d-flex align-items-center text-center"
+              >
+                <img
+                  src="/images/myapp-product-image.png"
+                  class="img-fluid xlp-v-align"
+                  alt="Xero Product Image"
+                />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col">
+                  <h3 class="xlp-h3">Why connect [App] to Xero</h3>
+                  <p class="xlp-p">
+                    The benefits of connecting [App] with Xero include:
+                  </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md">
+                  <div class="row">
+                    <div class="col-sm">
+                      <h5 class="xlp-h5">Benefit title</h5>
+                      <p class="xlp-p">
+                        benefit and the feature which delivers that benefit
+                      </p>
+                    </div>
+                    <div class="col-sm">
+                      <h5 class="xlp-h5">Benefit title</h5>
+                      <p class="xlp-p">
+                        benefit and the feature which delivers that benefit
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md">
+                  <div class="row">
+                    <div class="col-sm">
+                      <h5 class="xlp-h5">Benefit title</h5>
+                      <p class="xlp-p">
+                        benefit and the feature which delivers that benefit
+                      </p>
+                    </div>
+                    <div class="col-sm">
+                      <h5 class="xlp-h5">Benefit title</h5>
+                      <p class="xlp-p">
+                        benefit and the feature which delivers that benefit
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <a
+                    class="btn btn-secondary xlp-btn-app-cta"
+                    href="https://www.xero.com/signup/?xtid=x30yourapp"
+                    >Get MyApp</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section id="what-app-does" class="text-white xlp-bg-secondary-color">
+        <div class="container xlp-container">
+          <div class="row">
+            <div class="col-sm">
+              <h2 class="text-center xlp-h2">What [App] does</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              <h5 class="xlp-h5">Heading</h5>
+              <p class="xlp-p">
+                Description. Lorem ipsum dolor sit amet, consectetur adipiscing
+                elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+                aliqua.
+              </p>
+            </div>
+            <div class="col-sm">
+              <h5 class="xlp-h5">Heading</h5>
+              <p class="xlp-p">
+                Description. Lorem ipsum dolor sit amet, consectetur adipiscing
+                elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+                aliqua.
+              </p>
+            </div>
+            <div class="col-sm">
+              <h5 class="xlp-h5">Heading</h5>
+              <p class="xlp-p">
+                Description. Lorem ipsum dolor sit amet, consectetur adipiscing
+                elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+                aliqua.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section id="what-xero-does" class="text-white xlp-bg-primary-color">
+        <div class="container xlp-container">
+          <div class="row">
+            <div class="col-lg">
+              <div class="row">
+                <div class="col">
+                  <h3 class="xlp-h3">What Xero Does</h3>
+                  <p class="xlp-p">
+                    Xero is online accounting software that lets you run your
+                    business easily and efficiently.
+                  </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md">
+                  <div class="row">
+                    <div class="col-sm">
+                      <h5 class="xlp-h5">See your up-to-date cash position</h5>
+                      <p class="xlp-p">
+                        Know how you’re doing financially with secure daily
+                        updates from your bank accounts and a clear visual
+                        dashboard.
+                      </p>
+                    </div>
+                    <div class="col-sm">
+                      <h5 class="xlp-h5">
+                        Get paid faster and improve cash flow
+                      </h5>
+                      <p class="xlp-p">
+                        Easily create and send invoices with online payments and
+                        automated invoice reminders for faster payment.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md">
+                  <div class="row">
+                    <div class="col-sm">
+                      <h5 class="xlp-h5">Run your business from anywhere</h5>
+                      <p class="xlp-p">
+                        Access your business finances anytime, from any
+                        internet-connected device, and use the Xero app for iOS
+                        and Android.
+                      </p>
+                    </div>
+                    <div class="col-sm">
+                      <h5 class="xlp-h5">Connect and collaborate anytime</h5>
+                      <p class="xlp-p">
+                        Invite your team and your advisors to work with you in
+                        real time from home, office, or on the go using the mobile
+                        app.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <a
+                    class="btn btn-secondary xlp-btn-xero-cta"
+                    href="https://www.xero.com/signup/?xtid=x30yourapp"
+                    >Try Xero for Free</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="col-lg d-flex align-items-center">
+              <img
+                src="/images/xero-screenshot@2x.png"
+                class="img-fluid xlp-v-align"
+                alt="Xero Product Image"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section id="connect-app-to-xero">
+        <div class="container xlp-container">
+          <div class="row">
+            <div class="col text-center">
+              <h2>Connect MyApp to Xero in 3 Steps</h2>
+            </div>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <div
+                id="accordianId"
+                role="tablist"
+                aria-multiselectable="true"
+                class="xlp-collapse-accordian"
+              >
+                <div class="card xlp-card ">
+                    <a class="text-dark" data-toggle="collapse" data-parent="#accordianId" href="#section1ContentId" aria-expanded="true"
+                          aria-controls="section1ContentId">
+                      <div class="card-header" role="tab" id="section1HeaderId">
+                        <h5 class="mb-0">
+                            1 - Signup MyApp
+                        </h5>
+                      </div>
+                    </a>
+                  <div
+                    id="section1ContentId"
+                    class="collapse show"
+                    role="tabpanel"
+                    aria-labelledby="section1HeaderId"
+                  >
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-lg-8 col-md-6 col-sm-6 col-12">
+                          <h6>Step 1 - Signup MyApp</h6>
+                          <p>
+                            Signup with MyApp at
+                            <a href="#" class="text-dark"
+                              >http://myapp.com/signup</a
+                            >
+                          </p>
+  
+                          <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua. Ut enim ad minim veniam, quis
+                            nostrud exercitation ullamco laboris nisi ut aliquip
+                            ex ea commodo consequat.
+                          </p>
+                        </div>
+  
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                          <img
+                            src="/images/set-up-diagram.png"
+                            class="img-fluid rounded mx-auto d-block xlp-v-align"
+                            alt="step"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="card xlp-card ">
+                  <a class="text-dark" data-toggle="collapse" data-parent="#accordianId" href="#section2ContentId" aria-expanded="true"
+                        aria-controls="section2ContentId">
+                    <div class="card-header" role="tab" id="section2HeaderId">
+                      <h5 class="mb-0">
+                          2 - Connect to Xero
+  
+                      </h5>
+                    </div>
+                  </a>
+                  <div
+                    id="section2ContentId"
+                    class="collapse in"
+                    role="tabpanel"
+                    aria-labelledby="section2HeaderId"
+                  >
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-lg-8 col-md-6 col-sm-6 col-12">
+                          <h6>Step 2 - Connect to Xero</h6>
+                          <p>
+                            Go to setting -> integrations section, click on
+                            Connect to Xero.
+                          </p>
+  
+                          <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua. Ut enim ad minim veniam, quis
+                            nostrud exercitation ullamco laboris nisi ut aliquip
+                            ex ea commodo consequat.
+                          </p>
+                        </div>
+  
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                          <img
+                            src="/images/set-up-diagram.png"
+                            class="img-fluid rounded mx-auto d-block xlp-v-align"
+                            alt="step"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="card xlp-card ">
+                  <a class="text-dark" data-toggle="collapse" data-parent="#accordianId" href="#section3ContentId" aria-expanded="true"
+                        aria-controls="section2ContentId">
+                    <div class="card-header" role="tab" id="section3HeaderId">
+                      <h5 class="mb-0">
+                          3 - Sign in and authorise MyApp
+                      </h5>
+                    </div>
+                  </a>
+                  <div
+                    id="section3ContentId"
+                    class="collapse in"
+                    role="tabpanel"
+                    aria-labelledby="section3HeaderId"
+                  >
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-lg-8 col-md-6 col-sm-6 col-12">
+                          <h6>Sign in with Xero</h6>
+                          <p>
+                            Sign in with Xero, and authorise MyApp to access your
+                            Xero data.
+                          </p>
+  
+                          <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua. Ut enim ad minim veniam, quis
+                            nostrud exercitation ullamco laboris nisi ut aliquip
+                            ex ea commodo consequat.
+                          </p>
+                        </div>
+  
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                          <img
+                            src="/images/set-up-diagram.png"
+                            class="img-fluid rounded mx-auto d-block xlp-v-align"
+                            alt="step"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section id="what-customers-say" class="text-white xlp-bg-secondary-color">
+        <div class="container xlp-container">
+          <div class="row">
+            <div class="col-12">
+              <h2 class="text-center xlp-h2">What customers say</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-2 col-md-3 col-sm-6 col-12">
+              <img
+                src="/images/profile-placeholder.png"
+                class="img-fluid rounded mx-auto d-block xlp-v-align"
+                alt="customer profile"
+              />
+            </div>
+            <div class="col-lg-4 col-md-3 col-sm-6 col-12">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam.
+              </p>
+              <h6>Name, work, location</h6>
+            </div>
+  
+            <div class="col-lg-2 col-md-3 col-sm-6 col-12">
+              <img
+                src="/images/profile-placeholder.png"
+                class="img-fluid rounded mx-auto d-block xlp-v-align"
+                alt="customer profile"
+              />
+            </div>
+            <div class="col-lg-4 col-md-3 col-sm-6 col-12">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam.
+              </p>
+              <h6>Name, work, location</h6>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section id="footer" class="text-white xlp-bg-primary-color">
+        <div class="container xlp-container">
+          <div class="row justify-content-between">
+            <div class="col-lg-6 col-md-4 col-sm-12 col-12">
+              <p id="xlp-footer-copyright" class="xlp-v-align">My App 2019</p>
+            </div>
+  
+            <div class="col-lg-6 col-md-8 col-sm-12 col-12">
+              <div class="row justify-content-between">
+                <div class="col-6">
+                  <a
+                    class="btn btn-secondary xlp-btn-app-cta"
+                    href="#"
+                    role="button"
+                    >Get MyApp</a
+                  >
+                </div>
+  
+                <div class="col-6">
+                  <a
+                    class="btn btn-secondary xlp-btn-xero-cta"
+                    href="https://xero.com/signup/?xtid=x30myapp"
+                    role="button"
+                    >Try Xero for Free</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </body>
+  </html>
+  

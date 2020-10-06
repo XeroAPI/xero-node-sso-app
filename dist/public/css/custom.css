@@ -1,0 +1,126 @@
+/* Xero App Partner Landing Page custom scss styles */
+/* all entries has "xlp-" prefix and are specific to this landing page file, 
+please pay attention to the use of classes in HTML elements */
+/* Primay Color <- controls the primary color of the whole template */
+/* Secondary Color <- this should be 15% shade of the primary color. */
+
+/* Please change the primary color and secondary color to fit your website styles */
+.xlp-bg-primary-color {
+  background-color: #32465a;
+}
+
+.xlp-bg-secondary-color {
+  background-color: #4b6174;
+}
+
+.xlp-text-primary-color {
+  color: #32465a;
+}
+
+.xlp-text-secondary-color {
+  color: #4b6174;
+}
+/* only above entries has primary and secondary colors */
+
+.navbar-light .xlp-navbar-brand {
+  color: white;
+}
+
+.xlp-navbar-buttons {
+  border: none;
+  color: white;
+}
+
+.xlp-btn-light:hover {
+  color: white;
+}
+
+.xlp-jumbotron {
+  background-color: white;
+  padding: 0rem 1rem;
+}
+
+.xlp-jumbotron-text {
+  max-width: 900px;
+}
+
+.xlp-btn-app-cta {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 0.7em 3em;
+}
+
+.xlp-btn-xero-cta {
+  background-color: #13b6ea;
+  border: none;
+  color: white;
+  padding: 0.7em 2em;
+}
+
+.xlp-jumbotron-cta-btn-grp {
+  max-width: 500px;
+}
+
+#footer .xlp-container {
+  padding: 1rem 2rem;
+}
+
+#app-img .xlp-container {
+  padding: 0 2rem;
+}
+
+.xlp-container {
+  padding: 3rem 2rem;
+}
+
+.xlp-collapse-accordian {
+  padding: 1.7em 0em 0em 0em;
+}
+
+.xlp-navbar-light .xlp-navbar-toggler {
+  border-color: white;
+  background: white;
+}
+
+#key-benefit .h2,
+#key-benefit h2 {
+  font-weight: 500;
+}
+
+#key-benefit p.lead {
+  font-weight: 350;
+  padding-bottom: 0.75rem;
+}
+
+#what-xero-does .xlp-h2,
+#what-customers-say .xlp-h2 {
+  margin-bottom: 1.5em;
+}
+
+.xlp-h5 {
+  margin-bottom: 0.2em;
+}
+
+.xlp-p {
+  margin-bottom: 2em;
+}
+
+#why-connect-app-to-xero .xlp-container {
+  padding: 1rem 2rem;
+}
+
+.xlp-card {
+  border-radius: 0em;
+}
+
+.xlp-v-align {
+  vertical-align: middle;
+  margin: 1.4em 0;
+}
+
+@media (max-width: 768px) {
+  #xlp-footer-copyright {
+    text-align: center;
+  }
+}
