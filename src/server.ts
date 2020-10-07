@@ -3,7 +3,7 @@ import * as bodyParser from "body-parser";
 import express from "express";
 import session from "express-session";
 import { v4 as uuid } from "uuid";
-import { Request, Response } from "express";
+import e, { Request, Response } from "express";
 import { XeroClient } from "xero-node";
 import { sequelize } from "./models/index";
 import cookieParser from "cookie-parser";
@@ -16,7 +16,7 @@ const cors = require("cors");
 const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;
 const redirectUrl = process.env.REDIRECT_URI;
-const scopes = "offline_access openid profile email accounting.transactions accounting.settings";
+const scopes = "offline_access openid profile email accounting.transactions.read accounting.settings";
 
 const xero = new XeroClient({
   clientId: client_id,
@@ -32,6 +32,11 @@ if (!client_id || !client_secret || !redirectUrl) {
 
 function findUserWithSession(session: string) {
   return User.findOne({ where: { session: session} });
+}
+
+function deeplinkToInvoice(invoiceId, shortCode) {
+  console.log(`https://go.xero.com/organisationlogin/default.aspx?shortcode=${shortCode}&redirecturl=/AccountsReceivable/View.aspx?InvoiceID=${invoiceId}`)
+  return `https://go.xero.com/organisationlogin/default.aspx?shortcode=${shortCode}&redirecturl=/AccountsReceivable/View.aspx?InvoiceID=${invoiceId}`
 }
 
 class App {
@@ -65,6 +70,7 @@ class App {
     }));
 
     // add {force: true} to reset db every time
+    // sequelize.sync({force: true}).then(async() => {
     sequelize.sync().then(async() => {
       this.app.listen(process.env.PORT, () => {
         console.log(`Example app listening on port ${process.env.PORT}!`)
@@ -86,17 +92,48 @@ class App {
 
     router.get("/dashboard", async (req: Request, res: Response) => {
       if (req.signedCookies.recentSession){
-        console.log('req.signedCookies.recentSession: ',req.signedCookies.recentSession)
         const user = await findUserWithSession(req.signedCookies.recentSession)
-        console.log('user: ',user)
+        try {
+          if (!user) {
+            res.redirect("/logout"); // signed cookie does not match a user
+          }
+          const tokenSet = user.token_set
+          await xero.setTokenSet(tokenSet)
+          await xero.refreshToken()
+          await xero.updateTenants()
 
-        if (!user) {
-          // user has logged in on different device
-          // or signed cookie does not match a user
-          res.redirect("/logout");
+          const activeTenant = xero.tenants[0]
+          const invoicesRequest = await xero.accountingApi.getInvoices(activeTenant.tenantId)
+          const invoices = invoicesRequest.body.invoices
+          
+          console.log('activeTenant: ',activeTenant)
+
+          const dataSet = invoices.map(inv => {
+            return [
+              inv.contact.name,
+              inv.type,
+              inv.amountDue,
+              inv.invoiceNumber,
+              inv.payments.length.toString(),
+              inv.lineItems.length.toString(),
+              deeplinkToInvoice(inv.invoiceID, activeTenant.orgData.shortCode)
+            ]
+          })
+          console.log('dataSet: ',dataSet)
+
+          // const dataSet = [
+          //   [ "Angry Ale's", 'ACCREC', '1500', 'INV-0001', '1', '0', 'https://go.xero.com/organisationlogin/default.aspx?shortcode=!yrcgp&redirecturl=/AccountsReceivable/View.aspx?InvoiceID=e9f1bf65-8155-4521-a4ed-5b747816f9b5'],
+          //   [ 'Test User: 983139', 'ACCREC', '7000', 'XERO:438024', '0', '0', 'https://go.xero.com/organisationlogin/default.aspx?shortcode=!yrcgp&redirecturl=/AccountsReceivable/View.aspx?InvoiceID=4b27906a-4650-421a-b983-49246994f8f3']
+          // ]
+          res.render("dashboard", {user, dataSet});
+        } catch(e) {
+          console.log(':e ', e)
+          res.status(res.statusCode);
+
+          res.render("shared/error", {
+            error: e
+          });
         }
-
-        res.render("dashboard", { user });
       } else {
         res.redirect("/");
       }
@@ -139,12 +176,7 @@ class App {
           })
         }
         res.cookie('recentSession', recentSession, { signed: true, maxAge: 1 * 60 * 60 * 1000 }) // 1 hour
-
-        const createdOrUpdatedUser = await User.findOne({where: { email: decodedIdToken.email }})
-        
-        res.render("dashboard", {
-          user: createdOrUpdatedUser
-        });
+        res.redirect("dashboard");
       } catch (e) {
         res.status(res.statusCode);
 

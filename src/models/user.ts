@@ -1,3 +1,4 @@
+import { TokenSet } from "openid-client";
 import{ Model } from "sequelize";
 
 class User extends Model {
@@ -8,7 +9,7 @@ class User extends Model {
   public email!: string;
   public xero_userid!: string;
   public decoded_id_token!: string;
-  public token_set!: string;
+  public token_set!: TokenSet;
   public session!: string;
 }
 

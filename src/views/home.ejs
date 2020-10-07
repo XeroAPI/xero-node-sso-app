@@ -28,16 +28,22 @@
       <div class="container">
         <div class="jumbotron xlp-jumbotron">
           <div class="xlp-jumbotron-text text-center">
-            <h1 class="display-5">
-              Create account
-            </h1>
-            <p class="lead">
-              Sign up with Xero and your accounting data will populate your new account
-            </p>
+            <h2 class="display-5">
+              Create Account
+            </h2>
             <hr>
+            <br>
             <div class="row text-center">
-              <span style="margin: 0 auto; margin-top: 50px;" data-xero-sso data-theme="dark" data-href='<%= authorizeUrl %>' data-size="large" data-height="60" data-label="Sign in with Xero"></span>
-              <script src="https://edge.xero.com/platform/sso/xero-sso.js" async defer></script>
+              <div class='col-md-6'>
+                <img src="/images/callback-flow.png" class="img-fluid" alt="app-logo"/>
+              </div>
+              <div class='col-md-6'>
+                <p class="lead" style="margin-top: 50px;">
+                  Sign up with Xero and your personalized financial data will be populated in your new Logoipsum account!
+                </p>
+                <span style="margin: 0 auto; margin-top: 30px;" data-xero-sso data-theme="dark" data-href='<%= authorizeUrl %>' data-size="large" data-height="60" data-label="Sign in with Xero"></span>
+                <script src="https://edge.xero.com/platform/sso/xero-sso.js" async defer></script>
+              </div>
             </div>
           </div>
         </div>
