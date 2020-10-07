@@ -70,8 +70,8 @@ class App {
     }));
 
     // add {force: true} to reset db every time
-    // sequelize.sync({force: true}).then(async() => {
     sequelize.sync().then(async() => {
+    //sequelize.sync().then(async() => {
       this.app.listen(process.env.PORT, () => {
         console.log(`Example app listening on port ${process.env.PORT}!`)
       });
@@ -98,15 +98,15 @@ class App {
             res.redirect("/logout"); // signed cookie does not match a user
           }
           const tokenSet = user.token_set
+          console.log('user: ',user)
           await xero.setTokenSet(tokenSet)
           await xero.refreshToken()
           await xero.updateTenants()
 
-          const activeTenant = xero.tenants[0]
+          const activeTenant: any = user.active_tenant
           const invoicesRequest = await xero.accountingApi.getInvoices(activeTenant.tenantId)
           const invoices = invoicesRequest.body.invoices
           
-          console.log('activeTenant: ',activeTenant)
 
           const dataSet = invoices.map(inv => {
             return [
@@ -119,13 +119,12 @@ class App {
               deeplinkToInvoice(inv.invoiceID, activeTenant.orgData.shortCode)
             ]
           })
-          console.log('dataSet: ',dataSet)
 
-          // const dataSet = [
-          //   [ "Angry Ale's", 'ACCREC', '1500', 'INV-0001', '1', '0', 'https://go.xero.com/organisationlogin/default.aspx?shortcode=!yrcgp&redirecturl=/AccountsReceivable/View.aspx?InvoiceID=e9f1bf65-8155-4521-a4ed-5b747816f9b5'],
-          //   [ 'Test User: 983139', 'ACCREC', '7000', 'XERO:438024', '0', '0', 'https://go.xero.com/organisationlogin/default.aspx?shortcode=!yrcgp&redirecturl=/AccountsReceivable/View.aspx?InvoiceID=4b27906a-4650-421a-b983-49246994f8f3']
-          // ]
-          res.render("dashboard", {user, dataSet});
+          res.render("dashboard", {
+            user,
+            dataSet,
+            allTenants: xero.tenants
+          });
         } catch(e) {
           console.log(':e ', e)
           res.status(res.statusCode);
@@ -144,8 +143,8 @@ class App {
         const tokenSet = await xero.apiCallback(req.url);
         await xero.updateTenants()
         
-        const activeTenantId = xero.tenants[0].tenantId
-        const orgDetails = await xero.accountingApi.getOrganisations(activeTenantId)
+        const activeTenant = xero.tenants[0]
+        const orgDetails = await xero.accountingApi.getOrganisations(activeTenant.tenantId)
         const decodedIdToken = jwtDecode(tokenSet.id_token)
 
         const recentSession = uuid()
@@ -160,7 +159,7 @@ class App {
           xero_userid: decodedIdToken.xero_userid,
           decoded_id_token: decodedIdToken,
           token_set: tokenSet,
-          active_tenant_id: activeTenantId,
+          active_tenant: activeTenant,
           session: recentSession
         }
 
@@ -181,6 +180,31 @@ class App {
         res.status(res.statusCode);
 
         res.render("shared/error", {
+          error: e
+        });
+      }
+    });
+
+    router.post("/change_organisation", async (req: Request, res: Response) => {
+      try {
+        const activeOrgId = req.body.active_org_id
+        const picked = xero.tenants.filter((tenant) => tenant.tenantId == activeOrgId)[0]
+        const userParams = {
+          active_tenant: picked
+        }
+
+        const user = await findUserWithSession(req.signedCookies.recentSession)
+
+        await user.update(userParams).then(updatedUser => {
+          console.log(`UPDATED record ${JSON.stringify(updatedUser.email,null,2)}`)
+          return updatedUser
+        })
+
+        res.redirect('/dashboard')
+      } catch (e) {
+        res.status(res.statusCode);
+        res.render("shared/error", {
+          consentUrl: await xero.buildConsentUrl(),
           error: e
         });
       }

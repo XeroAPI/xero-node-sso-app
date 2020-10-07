@@ -8,6 +8,7 @@ class User extends Model {
   public address!: string;
   public email!: string;
   public xero_userid!: string;
+  public active_tenant!: string;
   public decoded_id_token!: string;
   public token_set!: TokenSet;
   public session!: string;

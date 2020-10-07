@@ -39,7 +39,10 @@ User.init(
       unique: true
     },
     xero_userid: {
-      type:  DataTypes.UUID
+      type: DataTypes.UUID
+    },
+    active_tenant: {
+      type: DataTypes.JSONB
     },
     decoded_id_token: {
       type: DataTypes.JSONB

@@ -1,7 +1,5 @@
 <html lang="en">
   <%- include('./header') -%>
-
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js'></script>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
   <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
@@ -14,6 +12,7 @@
             <img src="/images/logo-ipsum.png" style="max-width: 200px; margin: 25px; float: left;" class="img-fluid" alt="app-logo"/>
             <img src="/images/connected-app.svg" style="max-width: 200px; float: right;" class="img-fluid" alt="xero-app-partner-logo"/>
           </div>
+        </div>
       </div>
     </section>
 
@@ -23,6 +22,18 @@
           <div class="xlp-jumbotron-text text-center">
             <div class="row">
               <div class='col-md-12'>
+                <div class='nav-settings'>
+                  allTenants.length <%= allTenants.length %>
+                  <form method='POST' action="/change_organisation">
+                    <select name='active_org_id' class="select-box">
+                      <% for(var i=0; i < allTenants.length; i++) { %>
+                        <% var selected = allTenants[i].tenantId === user.active_tenant.tenantId ? "selected" : "" %>
+                        <option <%= selected %> value=<%= allTenants[i].tenantId %>> <%= allTenants[i].tenantName %></option>
+                        <% } %>
+                      </select>
+                      <input type="submit" class="select-input" value="Change Org">
+                  </form>
+                </div>
                 <table id="invoice-data-table" class="display" width="100%"></table>
                 <script>
                   $(document).ready(function() {
@@ -41,85 +52,6 @@
                     });
                   });
                 </script>
-                <!-- <canvas id="chart-area" width="400" height="400"></canvas>
-                <script>
-                  var randomScalingFactor = function() {
-                    return Math.round(Math.random() * 100);
-                  };
-
-                  var config = {
-                    type: 'pie',
-                    data: {
-                      datasets: [{
-                        data: [
-                          randomScalingFactor(),
-                          randomScalingFactor(),
-                          randomScalingFactor(),
-                          randomScalingFactor(),
-                          randomScalingFactor(),
-                        ],
-                        backgroundColor: [
-                          "red",
-                          'orange',
-                          'yellow',
-                          'green',
-                          'blue',
-                        ],
-                        label: 'Dataset 1'
-                      }],
-                      labels: [
-                        'Red',
-                        'Orange',
-                        'Yellow',
-                        'Green',
-                        'Blue'
-                      ]
-                    },
-                    options: {
-                      responsive: true
-                    }
-                  };
-
-                  window.onload = function() {
-                    var ctx = document.getElementById('chart-area').getContext('2d');
-                    window.myPie = new Chart(ctx, config);
-                  };
-
-                  document.getElementById('randomizeData').addEventListener('click', function() {
-                    config.data.datasets.forEach(function(dataset) {
-                      dataset.data = dataset.data.map(function() {
-                        return randomScalingFactor();
-                      });
-                    });
-
-                    window.myPie.update();
-                  });
-
-                  var colorNames = Object.keys(window.chartColors);
-                  document.getElementById('addDataset').addEventListener('click', function() {
-                    var newDataset = {
-                      backgroundColor: [],
-                      data: [],
-                      label: 'New dataset ' + config.data.datasets.length,
-                    };
-
-                    for (var index = 0; index < config.data.labels.length; ++index) {
-                      newDataset.data.push(randomScalingFactor());
-
-                      var colorName = colorNames[index % colorNames.length];
-                      var newColor = window.chartColors[colorName];
-                      newDataset.backgroundColor.push(newColor);
-                    }
-
-                    config.data.datasets.push(newDataset);
-                    window.myPie.update();
-                  });
-
-                  document.getElementById('removeDataset').addEventListener('click', function() {
-                    config.data.datasets.splice(0, 1);
-                    window.myPie.update();
-                  });
-                </script> -->
               </div>
             </div>
             <hr>
