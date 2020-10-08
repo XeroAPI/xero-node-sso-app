@@ -5,7 +5,9 @@
   "main": "build/app.js",
   "scripts": {
     "tsc": "tsc",
-    "start": "nodemon --config"
+    "start": "nodemon --config",
+    "postinstall": "tsc",
+    "deploy": "git add . && git commit -m Heroku && git push heroku master"
   },
   "author": "Xero Platform Team",
   "license": "MIT",
