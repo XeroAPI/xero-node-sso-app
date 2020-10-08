@@ -46,7 +46,7 @@ class App {
     this.app = express();
     this.config();
     this.routes();
-    this.app.set("views", path.join(__dirname, "views"));
+    this.app.set("views", path.join(__dirname, "../public/views"));
     this.app.set("view engine", "ejs");
     this.app.use(express.static(path.join(__dirname, "../public")));
 
@@ -118,13 +118,6 @@ class App {
               'weblink': deeplinkToInvoice(inv.invoiceID, activeTenant.orgData.shortCode)
             }
           })
-
-        //   const dataSet = [
-        //     { "information": "A1", "weblink": "http://www.microsoft.com" },
-        //     { "information": "A2", "weblink": "http://www.yahoo.com" },
-        //     { "information": "A3", "weblink": "http://www.google.com" },
-        //     { "information": "A4", "weblink": "http://www.duckduckgo.com" }
-        // ];
 
           res.render("dashboard", {
             user,
