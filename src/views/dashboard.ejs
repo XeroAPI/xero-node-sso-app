@@ -1,6 +1,7 @@
 <html lang="en">
   <%- include('./header') -%>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="/css/custom.css"/>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
   <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 
@@ -23,7 +24,6 @@
             <div class="row">
               <div class='col-md-12'>
                 <div class='nav-settings'>
-                  allTenants.length <%= allTenants.length %>
                   <form method='POST' action="/change_organisation">
                     <select name='active_org_id' class="select-box">
                       <% for(var i=0; i < allTenants.length; i++) { %>
@@ -34,7 +34,20 @@
                       <input type="submit" class="select-input" value="Change Org">
                   </form>
                 </div>
-                <table id="invoice-data-table" class="display" width="100%"></table>
+                <table id="invoice-data-table" class="display" width="100%">
+                  <thead>
+                    <tr>
+                      <th>Contact</th>
+                      <th>Type</th>
+                      <th>Due$</th>
+                      <th>Number</th>
+                      <th>Payment(s)</th>
+                      <th>Item(s)</th>
+                      <th>Xero</th>
+                    </tr>
+                </thead>
+                </table>
+                
                 <script>
                   $(document).ready(function(){
                     var tableData = <%- JSON.stringify(dataSet) %>;
@@ -50,7 +63,7 @@
                         { "data": "weblink",
                           "render": function(data, type, row, meta){
                             if(type === 'display'){
-                              data = '<a href="' + data + '">' + data + '</a>';
+                              data = '<a target="_blank" href="' + data + '">' + 'View in Xero' + '</a>';
                             }
                             return data;
                           }

@@ -1,3 +1,22 @@
 body {
   background: whitesmoke;
 }
+
+.nav-settings input {
+  -webkit-appearance: none;
+  height: 30px;
+  background-color:#FFF;
+  color:#666;
+  font-weight:bold;
+  border: solid #666 1px;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-right: 5px;
+}
+
+.select-box {
+  height: 30px;
+  font-size: 13px;
+  max-width: 275px;
+  letter-spacing: 1px;
+}
