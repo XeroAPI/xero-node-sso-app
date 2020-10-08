@@ -5,6 +5,7 @@ body {
 .nav-settings input {
   -webkit-appearance: none;
   height: 30px;
+  margin-top: 6px;
   background-color:#FFF;
   color:#666;
   font-weight:bold;
@@ -16,6 +17,7 @@ body {
 
 .select-box {
   height: 30px;
+  margin-top: 6px;
   font-size: 13px;
   max-width: 275px;
   letter-spacing: 1px;

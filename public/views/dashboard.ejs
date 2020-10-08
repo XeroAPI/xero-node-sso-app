@@ -19,10 +19,27 @@
 
     <section id="key-benefit">
       <div class="container text-center">
-        <div class="jumbotron xlp-jumbotron">
-          <div class="xlp-jumbotron-text text-center">
+        <div class="jumbotron xlp-jumbotron" style="padding-top: 30px;">
+          <div class="xlp-jumbotron-text">
             <div class="row">
-              <div class='col-md-12'>
+              <div class='col-md-7'>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">
+                         <small class="text-muted"><%= user.firstName %> <%= user.lastName %></small>
+                        </th>
+                      <th scope="col">
+                         <small class="text-muted"><%= user.email %></small>
+                        </th>
+                      <th scope="col">
+                         <small class="text-muted"><%= user.active_tenant.orgData.timezone %></small>
+                        </th>
+                    </tr>
+                  </thead>
+                </table>
+              </div>
+              <div class='col-md-5 text-right'>
                 <div class='nav-settings'>
                   <form method='POST' action="/change_organisation">
                     <select name='active_org_id' class="select-box">
@@ -34,6 +51,10 @@
                       <input type="submit" class="select-input" value="Change Org">
                   </form>
                 </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class='col-md-12'>
                 <table id="invoice-data-table" class="display" width="100%">
                   <thead>
                     <tr>

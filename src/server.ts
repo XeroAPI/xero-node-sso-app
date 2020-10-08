@@ -16,7 +16,7 @@ const cors = require("cors");
 const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;
 const redirectUrl = process.env.REDIRECT_URI;
-const scopes = "offline_access openid profile email accounting.transactions.read accounting.settings";
+const scopes = "offline_access openid profile email accounting.transactions.read accounting.settings.read";
 
 const xero = new XeroClient({
   clientId: client_id,
@@ -89,54 +89,6 @@ class App {
 			});
     });
 
-    router.get("/dashboard", async (req: Request, res: Response) => {
-      if (req.signedCookies.recentSession){
-        const user = await findUserWithSession(req.signedCookies.recentSession)
-        try {
-          if (!user) {
-            res.redirect("/logout"); // signed cookie does not match a user
-          }
-          const tokenSet = user.token_set
-          console.log('user: ',user)
-          await xero.setTokenSet(tokenSet)
-          await xero.refreshToken()
-          await xero.updateTenants()
-
-          const activeTenant: any = user.active_tenant
-          const invoicesRequest = await xero.accountingApi.getInvoices(activeTenant.tenantId)
-          const invoices = invoicesRequest.body.invoices
-          
-
-          const dataSet = invoices.map(inv => {
-            return {
-              'ContactName': inv.contact.name,
-              'Type': inv.type,
-              'AmountDue': inv.amountDue,
-              'InvoiceNumber': inv.invoiceNumber,
-              'Payments': inv.payments.length.toString(),
-              'LineItems': inv.lineItems.length.toString(),
-              'weblink': deeplinkToInvoice(inv.invoiceID, activeTenant.orgData.shortCode)
-            }
-          })
-
-          res.render("dashboard", {
-            user,
-            dataSet,
-            allTenants: xero.tenants
-          });
-        } catch(e) {
-          console.log(':e ', e)
-          res.status(res.statusCode);
-
-          res.render("shared/error", {
-            error: e
-          });
-        }
-      } else {
-        res.redirect("/");
-      }
-    });
-
     router.get("/callback", async (req: Request, res: Response) => {
       try {
         const tokenSet = await xero.apiCallback(req.url);
@@ -184,13 +136,55 @@ class App {
       }
     });
 
+    router.get("/dashboard", async (req: Request, res: Response) => {
+      if (req.signedCookies.recentSession){
+        const user = await findUserWithSession(req.signedCookies.recentSession)
+        try {
+          if (!user) {
+            res.redirect("/logout"); // signed cookie does not match a user
+          }
+          const tokenSet = user.token_set
+          await xero.setTokenSet(tokenSet)
+          await xero.refreshToken()
+          await xero.updateTenants()
+
+          const activeTenant: any = user.active_tenant
+          const invoicesRequest = await xero.accountingApi.getInvoices(activeTenant.tenantId)
+          const invoices = invoicesRequest.body.invoices
+
+          const dataSet = invoices.map(inv => {
+            return {
+              'ContactName': inv.contact.name,
+              'Type': inv.type,
+              'AmountDue': inv.amountDue,
+              'InvoiceNumber': inv.invoiceNumber,
+              'Payments': inv.payments.length.toString(),
+              'LineItems': inv.lineItems.length.toString(),
+              'weblink': deeplinkToInvoice(inv.invoiceID, activeTenant.orgData.shortCode)
+            }
+          })
+
+          res.render("dashboard", {
+            user,
+            dataSet,
+            allTenants: xero.tenants
+          });
+        } catch(e) {
+          res.status(res.statusCode);
+          res.render("shared/error", {
+            error: e
+          });
+        }
+      } else {
+        res.redirect("/");
+      }
+    });
+
     router.post("/change_organisation", async (req: Request, res: Response) => {
       try {
         const activeOrgId = req.body.active_org_id
         const picked = xero.tenants.filter((tenant) => tenant.tenantId == activeOrgId)[0]
-        const userParams = {
-          active_tenant: picked
-        }
+        const userParams = { active_tenant: picked }
 
         const user = await findUserWithSession(req.signedCookies.recentSession)
 
