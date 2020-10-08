@@ -3,7 +3,7 @@ import * as bodyParser from "body-parser";
 import express from "express";
 import session from "express-session";
 import { v4 as uuid } from "uuid";
-import e, { Request, Response } from "express";
+import { Request, Response } from "express";
 import { XeroClient } from "xero-node";
 import { sequelize } from "./models/index";
 import cookieParser from "cookie-parser";
@@ -35,7 +35,6 @@ function findUserWithSession(session: string) {
 }
 
 function deeplinkToInvoice(invoiceId, shortCode) {
-  console.log(`https://go.xero.com/organisationlogin/default.aspx?shortcode=${shortCode}&redirecturl=/AccountsReceivable/View.aspx?InvoiceID=${invoiceId}`)
   return `https://go.xero.com/organisationlogin/default.aspx?shortcode=${shortCode}&redirecturl=/AccountsReceivable/View.aspx?InvoiceID=${invoiceId}`
 }
 
@@ -69,9 +68,9 @@ class App {
       saveUninitialized: true
     }));
 
-    // add {force: true} to reset db every time
+    // add {force: true} to sync() to reset db
+    // sequelize.sync({force: true}).then(async() => {
     sequelize.sync().then(async() => {
-    //sequelize.sync().then(async() => {
       this.app.listen(process.env.PORT, () => {
         console.log(`Example app listening on port ${process.env.PORT}!`)
       });
@@ -109,16 +108,23 @@ class App {
           
 
           const dataSet = invoices.map(inv => {
-            return [
-              inv.contact.name,
-              inv.type,
-              inv.amountDue,
-              inv.invoiceNumber,
-              inv.payments.length.toString(),
-              inv.lineItems.length.toString(),
-              deeplinkToInvoice(inv.invoiceID, activeTenant.orgData.shortCode)
-            ]
+            return {
+              'ContactName': inv.contact.name,
+              'Type': inv.type,
+              'AmountDue': inv.amountDue,
+              'InvoiceNumber': inv.invoiceNumber,
+              'Payments': inv.payments.length.toString(),
+              'LineItems': inv.lineItems.length.toString(),
+              'weblink': deeplinkToInvoice(inv.invoiceID, activeTenant.orgData.shortCode)
+            }
           })
+
+        //   const dataSet = [
+        //     { "information": "A1", "weblink": "http://www.microsoft.com" },
+        //     { "information": "A2", "weblink": "http://www.yahoo.com" },
+        //     { "information": "A3", "weblink": "http://www.google.com" },
+        //     { "information": "A4", "weblink": "http://www.duckduckgo.com" }
+        // ];
 
           res.render("dashboard", {
             user,

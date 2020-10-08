@@ -36,19 +36,25 @@
                 </div>
                 <table id="invoice-data-table" class="display" width="100%"></table>
                 <script>
-                  $(document).ready(function() {
+                  $(document).ready(function(){
                     var tableData = <%- JSON.stringify(dataSet) %>;
-                    $('#invoice-data-table').DataTable( {
-                        data: tableData,
-                        columns: [
-                            { title: "Contact Name" },
-                            { title: "Amount Due" },
-                            { title: "Type" },
-                            { title: "Invoice Number" },
-                            { title: "Payments" },
-                            { title: "Line Items" },
-                            { title: "Link to Xero" }
-                        ]
+                    $('#invoice-data-table').DataTable({
+                      data: tableData,
+                      columns: [
+                        {'data': 'ContactName'},
+                        {'data': 'Type'},
+                        {'data': 'AmountDue'},
+                        {'data': 'InvoiceNumber'},
+                        {'data': 'Payments'},
+                        {'data': 'LineItems'},
+                        { "data": "weblink",
+                          "render": function(data, type, row, meta){
+                            if(type === 'display'){
+                              data = '<a href="' + data + '">' + data + '</a>';
+                            }
+                            return data;
+                          }
+                      }]
                     });
                   });
                 </script>
