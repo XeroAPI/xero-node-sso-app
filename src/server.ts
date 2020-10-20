@@ -84,14 +84,16 @@ class App {
       if(req.signedCookies.recentSession) {
         res.redirect("/dashboard");
       }
-			res.render("home", {
-				authorizeUrl: await xero.buildConsentUrl()
-			});
+      res.render("home", { 
+        authorizeUrl: await xero.buildConsentUrl()
+      });
     });
 
     router.get("/callback", async (req: Request, res: Response) => {
       try {
-        const tokenSet = await xero.apiCallback(req.url);
+        const requestUrl = req.url
+        console.log('requestUrl: ',requestUrl)
+        const tokenSet = await xero.apiCallback(requestUrl);
         await xero.updateTenants()
         
         const activeTenant = xero.tenants[0]
@@ -116,12 +118,12 @@ class App {
 
         if (user) {
           await user.update(userParams).then(updatedRecord => {
-            console.log(`UPDATED record ${JSON.stringify(updatedRecord.email,null,2)}`)
+            console.log(`UPDATED user ${JSON.stringify(updatedRecord.email,null,2)}`)
             return updatedRecord
           })
         } else {
           await User.create(userParams).then(createdRecord => {
-            console.log(`CREATED record ${JSON.stringify(createdRecord.email,null,2)}`)
+            console.log(`CREATED user ${JSON.stringify(createdRecord.email,null,2)}`)
             return createdRecord
           })
         }
