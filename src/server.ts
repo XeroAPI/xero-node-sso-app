@@ -54,9 +54,9 @@ class App {
   }
 
   private config(): void {
-		var corsOptions = {
-			origin: "http://localhost:8081"
-		};
+    var corsOptions = {
+      origin: "http://localhost:8081"
+    };
 		
 		this.app.use(cors(corsOptions));
     this.app.use(bodyParser.json());
