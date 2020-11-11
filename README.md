@@ -7,8 +7,7 @@ Offering Single Sign On is a valuable way to convert more users while also pulli
 * 1) [What travel visas teach us about software authentication](#TODO-medium-link)
 * 2) [How to build Single Sign-on (SSO) using OAuth2.0 & OpenID Connect](#TODO-medium-link)
 
-### Hosted Demo of app
-* https://xero-sso.herokuapp.com
+### [Hosted Demo of app](https://xero-sso.herokuapp.com)
 ![sso-demo](/sso-vid.gif)
 
 # Code Walktrhough
