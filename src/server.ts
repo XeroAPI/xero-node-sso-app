@@ -129,11 +129,7 @@ class App {
         
         res.redirect("dashboard");
       } catch (e) {
-        res.status(res.statusCode);
-
-        res.render("shared/error", {
-          error: e
-        });
+        res.redirect("/logout");
       }
     });
 

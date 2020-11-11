@@ -22,10 +22,11 @@ The following steps are the core pieces of code you will need to implement this 
 ---
 1. Scopes & Authorization URL
 This will look something like:
-> https://login.xero.com/identity/connect/authorize?client_id=<CLIENT_ID>&scope=offline_access openid profile email accounting.transactions&response_type=code&redirect_uri=<CALLBACK_URI>
-**offline_access**: This will ensure a `refresh_token` is returned by the api so you can persist long standing API connections
-**openid profile email**: These are Xero's supported OIDC scopes. They will return a JWT called `id_token` which you can Base64Url decode to utilize the user's information
-**accounting.transactions**: This is a Xero specific scope that enables the interaction with an organisations accounting transactions ie. invoices & bank transactions, etc.
+> `https://login.xero.com/identity/connect/authorize?client_id=<CLIENT_ID>&scope=offline_access openid profile email accounting.transactions&response_type=code&redirect_uri=<CALLBACK_URI>`
+
+* **offline_access**: This will ensure a `refresh_token` is returned by the api so you can persist long standing API connections
+* **openid profile email**: These are Xero's supported OIDC scopes. They will return a JWT called `id_token` which you can Base64Url decode to utilize the user's information
+* **accounting.transactions**: This is a Xero specific scope that enables the interaction with an organisations accounting transactions ie. invoices & bank transactions, etc.
 
 2. Callback URL
 In the same route that matches the authorization url and the app settings in your [Xero App Dashboard](https://developer.xero.com/myapps/), you will need to catch the authorization flow temporary code and exchange for `token_set`
