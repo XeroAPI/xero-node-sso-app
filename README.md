@@ -1,10 +1,89 @@
-# Xero NodeJS OAuth 2.0 Typescript Starter
-Welcome! This app shows a strategy to offer a simple user authentication mechanism utilizing the [OpenID Connect](https://openid.net/connect/) and [OAuth 2.0](https://oauth.net/2/) Specifications. When you give an OA2 authorization flow the `openid profile email` scopes, the provider will send back an `id_token` that you can validate, decode and use to provision a user account for your software.
+# Xero Single Sign on Sample app
+This app shows a strategy to offer a simple user authentication mechanism utilizing the [OpenID Connect - OIDC](https://openid.net/connect/) and [OAuth 2.0 - OA2](https://oauth.net/2/) Specifications.
 
-### Setting up postgresql
-1) Install postgres
+When you give an OA2 authorization flow the `openid profile email` scopes, the provider will send back an `id_token` that you can validate, decode and use to provision a user account for your software.
 
-On mac I reccomend using [homebrew](https://wiki.postgresql.org/wiki/Homebrew) to install. For windows or Ubuntu please follow [postgres' guides](https://www.postgresql.org/download/).
+Offering Single Sign On is a valuable way to convert more users to your application, in addition your app can pull/push important business data using the `access_token` returned from the same authroization flow.
+
+Checkout the two part blog for more context!
+* 1) [What travel visas teach us about software authentication](#TODO-medium-link)
+* 2) [How to build Single Sign-on (SSO) using OAuth2.0 & OpenID Connect](#TODO-medium-link)
+
+# Code Walktrhough
+
+The following steps are the core pieces of code you will need to implement this in any application.
+
+### Steps 
+1. Scopes & Authorization URL
+2. Callback URL
+3. `id_token` validation & decoding
+5. Create || update, then 'login' a user
+
+---
+1. Scopes & Authorization URL
+This will look something like:
+> https://login.xero.com/identity/connect/authorize?client_id=<CLIENT_ID>&scope=offline_access openid profile email accounting.transactions&response_type=code&redirect_uri=<CALLBACK_URI>
+**offline_access**: This will ensure a `refresh_token` is returned by the api so you can persist long standing API connections
+**openid profile email**: These are Xero's supported OIDC scopes. They will return a JWT called `id_token` which you can Base64Url decode to utilize the user's information
+**accounting.transactions**: This is a Xero specific scope that enables the interaction with an organisations accounting transactions ie. invoices & bank transactions, etc.
+
+2. Callback URL
+In the same route that matches the authorization url and the app settings in your [Xero App Dashboard](https://developer.xero.com/myapps/), you will need to catch the authorization flow temporary code and exchange for `token_set`
+
+In this example we are using the [xero-node SDK](https://github.com/XeroAPI/xero-node) which has a helper to do this exchange.
+```javascript
+const tokenSet = await xero.apiCallback(requestUrl);
+```
+
+3. `id_token` validation and decoding
+The SDK also handles this under the hood with an OIDC Certified library called [node-openid-client ](https://openid.net/developers/certified/) which does a sequence of cryptographic checks to ensure the token is valid and has not been tampered with.
+```javascript
+await this.validateIdToken(tokenset, checks.nonce, 'authorization', checks.max_age, checks.state);
+```
+Once validated we can decode the JWT and access the user data within for use in our user management & login code.
+```javascript
+const decodedIdToken = jwtDecode(tokenSet.id_token)
+
+const userParams = {
+  firstName: decodedIdToken.given_name,
+  lastName: decodedIdToken.family_name,
+  email: decodedIdToken.email,
+  xero_userid: decodedIdToken.xero_userid,
+  decoded_id_token: decodedIdToken,
+  token_set: tokenSet,
+  ...
+}
+```
+
+5. Create || update, then 'login' a user
+Now that we have verified user data out of our `id_token` we can lookup to see if that user already exists or not. If they do, we update any incoming data like a name change, and if not we create a new user record in our database and log them, setting a secure signed cookie variable that will persist their login session for one hour.
+```javascript
+const user = await User.findOne({where: { email: decodedIdToken.email }})
+
+if (user) {
+  await user.update(userParams).then(updatedRecord => {
+    console.log(`UPDATED user ${JSON.stringify(updatedRecord.email,null,2)}`)
+    return updatedRecord
+  })
+} else {
+  await User.create(userParams).then(createdRecord => {
+    console.log(`CREATED user ${JSON.stringify(createdRecord.email,null,2)}`)
+    return createdRecord
+  })
+}
+res.cookie('recentSession', recentSession, { signed: true, maxAge: 1 * 60 * 60 * 1000 }) // 1 hour
+res.redirect("dashboard");
+```
+
+Thats it! While every web application's user management flow can vary in complexity, this code should show you the basics in how you can securely leverage OA2 and OIDC's `access_token` and `id_token` to provision accounts and leverage the power of Single Sign on using Xero.
+
+
+### Running app
+Feel free to contribute or extend to this repo. Steps to getting this app running locally below:
+
+1. Install postgres
+
+On mac I recommend using [homebrew](https://wiki.postgresql.org/wiki/Homebrew) to install. For windows or Ubuntu please follow [postgres' guides](https://www.postgresql.org/download/).
 > Helpful guides if you get stuck:
 * [MacOS Install](https://www.robinwieruch.de/postgres-sql-macos-setup) to set that up
 
@@ -26,6 +105,7 @@ REDIRECT_URI=...
 DATABASE=...
 DATABASE_USER=...
 DATABASE_PASSWORD=...
+PORT=5000
 ```
 
 ### Build and run
@@ -34,20 +114,4 @@ DATABASE_PASSWORD=...
 yarn install
 yarn start
 ```
-
-### Code Breakdown
-Offering Single Sign On is a valuable way to convert more users to your application. You can read more about the strategy in the two part blog related to this repo.
-Part One: [What travel visas teach us about software authentication](https://docs.google.com/document/d/1vGn1ypS1EjRz5v0CeqYVVbcawOW0CMBX4gs-K3Dx2kM/edit)
-Part Two: [How to build Single Sign-on (SSO) using OAuth2.0 & OpenID Connect](https://docs.google.com/document/d/1Qrbd-8YG7cvte-FjcR8MweHylztx6BCijy50HjRRpqs/edit)
-
-For the growing ecosystem of companies using both OAuth2.0 and OpenID Connect specifications it becomes simpler to integrate software systems.
-
-The core code you will need to understand for is as follows.
-1) OAuth2.0 Scopes
-2) OAuth2.0 Callback URL
-3) `id_token` validation
-4) `id_token` decoding
-5) Create or update then 'login' a user
-
-Validate the Id Token. This project uses a dependency that validates for us
-![Image of Yaktocat](public/images/id-token-validation.png)
+`http://localhost:5000/`

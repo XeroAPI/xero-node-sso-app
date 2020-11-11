@@ -92,17 +92,15 @@ class App {
     router.get("/callback", async (req: Request, res: Response) => {
       try {
         const requestUrl = req.url
-        console.log('requestUrl: ',requestUrl)
         const tokenSet = await xero.apiCallback(requestUrl);
         await xero.updateTenants()
         
         const activeTenant = xero.tenants[0]
         const orgDetails = await xero.accountingApi.getOrganisations(activeTenant.tenantId)
-        const decodedIdToken = jwtDecode(tokenSet.id_token)
-
-        const recentSession = uuid()
-        const user = await User.findOne({where: { email: decodedIdToken.email }})
         const address = orgDetails.body.organisations[0].addresses[0]
+        const decodedIdToken = jwtDecode(tokenSet.id_token)
+        const user = await User.findOne({where: { email: decodedIdToken.email }})
+        const recentSession = uuid()
 
         const userParams = {
           firstName: decodedIdToken.given_name,
@@ -128,6 +126,7 @@ class App {
           })
         }
         res.cookie('recentSession', recentSession, { signed: true, maxAge: 1 * 60 * 60 * 1000 }) // 1 hour
+        
         res.redirect("dashboard");
       } catch (e) {
         res.status(res.statusCode);
