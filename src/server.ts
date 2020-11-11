@@ -129,7 +129,11 @@ class App {
         
         res.redirect("dashboard");
       } catch (e) {
-        res.redirect("/logout");
+        res.status(res.statusCode);
+
+        res.render("shared/error", {
+          error: e
+        });
       }
     });
 
@@ -167,10 +171,8 @@ class App {
             allTenants: xero.tenants
           });
         } catch(e) {
-          res.status(res.statusCode);
-          res.render("shared/error", {
-            error: e
-          });
+          console.log('error: ', e)
+          res.redirect("/logout")
         }
       } else {
         res.redirect("/");
