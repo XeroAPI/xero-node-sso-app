@@ -17,7 +17,7 @@ The following steps are the core pieces of code you will need to implement this 
 ### 4. Create || update, then 'login' a user
 
 ---
-1. **Scopes & Authorization URL**
+#### 1. **Scopes & Authorization URL**
 
 This will look something like:
 > `https://login.xero.com/identity/connect/authorize?client_id=<CLIENT_ID>&scope=offline_access openid profile email accounting.transactions&response_type=code&redirect_uri=<CALLBACK_URI>`
@@ -27,7 +27,7 @@ This will look something like:
 * **accounting.transactions**: This is a Xero specific scope that enables the interaction with an organisations accounting transactions ie. invoices & bank transactions, etc.
 
 ---
-2. **Callback URL**
+#### 2. **Callback URL**
 
 In the same route that matches the authorization url and the app settings in your [Xero App Dashboard](https://developer.xero.com/myapps/), you will need to catch the authorization flow temporary code and exchange for `token_set`
 
@@ -37,7 +37,7 @@ const tokenSet = await xero.apiCallback(requestUrl);
 ```
 
 ---
-3. **`id_token` validation and decoding**
+#### 3. **`id_token` validation and decoding**
 
 The SDK also handles this under the hood with an OIDC Certified library called [node-openid-client ](https://openid.net/developers/certified/) which does a sequence of cryptographic checks to ensure the token is valid and has not been tampered with.
 ```javascript
@@ -59,7 +59,7 @@ const userParams = {
 ```
 
 ---
-4. **Create || update, then 'login' a user**
+#### 4. **Create || update, then 'login' a user**
 
 Now that we have verified user data out of our `id_token` we can lookup to see if that user already exists or not. If they do, we update any incoming data like a name change, and if not we create a new user record in our database and log them, setting a secure signed cookie variable that will persist their login session for one hour.
 ```javascript
