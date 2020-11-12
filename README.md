@@ -5,7 +5,7 @@ This app shows a user authentication strategy using [OAuth 2.0](https://oauth.ne
 * 1) [What travel visas teach us about software authentication](#TODO-medium-link)
 * 2) [How to build Single Sign-on (SSO) using OAuth2.0 & OpenID Connect](#TODO-medium-link)
 
-### [Hosted Demo of app](https://xero-sso.herokuapp.com)
+# <a href="https://xero-sso.herokuapp.com" target="_blank">Hosted Demo of app</a>
 ![sso-demo](/sso-vid.gif)
 
 # Code Walktrhough
