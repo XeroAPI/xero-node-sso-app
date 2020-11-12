@@ -19,6 +19,7 @@ The following steps are the core pieces of code you will need to implement this 
 
 ---
 1. Scopes & Authorization URL
+
 This will look something like:
 > `https://login.xero.com/identity/connect/authorize?client_id=<CLIENT_ID>&scope=offline_access openid profile email accounting.transactions&response_type=code&redirect_uri=<CALLBACK_URI>`
 
@@ -26,6 +27,7 @@ This will look something like:
 * **openid profile email**: These are Xero's supported OIDC scopes. They will return a JWT called `id_token` which you can Base64Url decode to utilize the user's information
 * **accounting.transactions**: This is a Xero specific scope that enables the interaction with an organisations accounting transactions ie. invoices & bank transactions, etc.
 
+---
 2. Callback URL
 In the same route that matches the authorization url and the app settings in your [Xero App Dashboard](https://developer.xero.com/myapps/), you will need to catch the authorization flow temporary code and exchange for `token_set`
 
@@ -34,6 +36,7 @@ In this example we are using the [xero-node SDK](https://github.com/XeroAPI/xero
 const tokenSet = await xero.apiCallback(requestUrl);
 ```
 
+---
 3. `id_token` validation and decoding
 The SDK also handles this under the hood with an OIDC Certified library called [node-openid-client ](https://openid.net/developers/certified/) which does a sequence of cryptographic checks to ensure the token is valid and has not been tampered with.
 ```javascript
@@ -54,7 +57,8 @@ const userParams = {
 }
 ```
 
-5. Create || update, then 'login' a user
+---
+4. Create || update, then 'login' a user
 Now that we have verified user data out of our `id_token` we can lookup to see if that user already exists or not. If they do, we update any incoming data like a name change, and if not we create a new user record in our database and log them, setting a secure signed cookie variable that will persist their login session for one hour.
 ```javascript
 const user = await User.findOne({where: { email: decodedIdToken.email }})
@@ -74,11 +78,15 @@ res.cookie('recentSession', recentSession, { signed: true, maxAge: 1 * 60 * 60 *
 res.redirect("dashboard");
 ```
 
-Thats it! While every web application's user management flow can vary in complexity, this code should show you the basics in how you can securely leverage OA2 and OIDC's `access_token` and `id_token` to provision accounts and leverage the power of Single Sign on using Xero.
+---
 
+While every web application's user management flow can vary in complexity, this code shows the basics of how to securely leverage OA2 and OIDC's `access_token` and `id_token` to provision accounts and leverage the power of Xero's Accounting API.
+
+
+---
 
 ### Running app
-Feel free to contribute or extend to this repo. Steps to getting this app running locally below:
+To contribute or extend to this repo get running locally through these steps:
 
 1. Install postgres
 
@@ -113,4 +121,4 @@ PORT=5000
 yarn install
 yarn start
 ```
-`http://localhost:5000/`
+open `http://localhost:5000/`
