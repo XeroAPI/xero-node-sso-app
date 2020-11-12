@@ -1,14 +1,12 @@
 # Xero Single Sign on Sample app
-This app shows a simple user authentication mechanism using [OAuth 2.0](https://oauth.net/2/) and [OpenID Connect](https://openid.net/connect/).
-
-Offering Single Sign On is a valuable way to convert more users while also pulling/pushing important business data to the provider's API's.
+This app shows a user authentication strategy using [OAuth 2.0](https://oauth.net/2/) and [OpenID Connect](https://openid.net/connect/). Single Sign On with Xero can be a valuable tool to increase signup converion and pull/push important business data to a businesses General Ledger.
 
 ### Checkout the two part blog for more context
 * 1) [What travel visas teach us about software authentication](#TODO-medium-link)
 * 2) [How to build Single Sign-on (SSO) using OAuth2.0 & OpenID Connect](#TODO-medium-link)
 
 ### [Hosted Demo of app](https://xero-sso.herokuapp.com)
-![sso-demo](/sso-vid.gif)
+![sso-demo](/sso-vid.gif){width=500px}
 
 # Code Walktrhough
 The following steps are the core pieces of code you will need to implement this in any application.
