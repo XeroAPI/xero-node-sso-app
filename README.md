@@ -6,7 +6,7 @@ This app shows a user authentication strategy using [OAuth 2.0](https://oauth.ne
 * 2) [How to build Single Sign-on (SSO) using OAuth2.0 & OpenID Connect](#TODO-medium-link)
 
 ### [Hosted Demo of app](https://xero-sso.herokuapp.com)
-![sso-demo](/sso-vid.gif){width=500px}
+![sso-demo](/sso-vid.gif)
 
 # Code Walktrhough
 The following steps are the core pieces of code you will need to implement this in any application.
