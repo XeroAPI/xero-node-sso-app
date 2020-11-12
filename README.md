@@ -14,7 +14,7 @@ The following steps are the core pieces of code you will need to implement this 
 ### 1. Scopes & Authorization URL
 ### 2. Callback URL
 ### 3. `id_token` validation & decoding
-### 5. Create || update, then 'login' a user
+### 4. Create || update, then 'login' a user
 
 ---
 1. **Scopes & Authorization URL**
