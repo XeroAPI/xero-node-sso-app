@@ -33,7 +33,7 @@ In the same route that matches the authorization url and the app settings in you
 
 In this example we are using the [xero-node SDK](https://github.com/XeroAPI/xero-node) which has a helper to do this exchange.
 ```javascript
-const tokenSet = await xero.apiCallback(requestUrl);
+const tokenSet = await xero.apiCallback(responseUrl);
 ```
 
 ---
