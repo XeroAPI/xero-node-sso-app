@@ -11,8 +11,6 @@ This app shows a user authentication strategy using [OAuth 2.0](https://oauth.ne
 ---
 # Code Walkthrough
 The following steps are the core pieces of code you will need to implement this in any application.
-
-## Steps 
 ### 1. Scopes & Authorization URL
 ### 2. Callback URL
 ### 3. `id_token` validation & decoding
