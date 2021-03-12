@@ -69,8 +69,8 @@ class App {
     }));
 
     // add {force: true} to sync() to reset db
-    // sequelize.sync({force: true}).then(async() => {
-    sequelize.sync().then(async() => {
+    sequelize.sync({force: true}).then(async() => {
+    // sequelize.sync().then(async() => {
       this.app.listen(process.env.PORT, () => {
         console.log(`Example app listening on port ${process.env.PORT}!`)
       });
