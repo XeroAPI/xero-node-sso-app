@@ -7,7 +7,14 @@ if (process.env.DATABASE_URL) {
   sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect:  'postgres',
     protocol: 'postgres',
-    logging:  true //false
+    logging:  true, //false
+    pool: {
+      max: 15,
+      min: 5,
+      idle: 20000,
+      evict: 15000,
+      acquire: 30000
+    }
   });
 } else {
   sequelize = new Sequelize(
