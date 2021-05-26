@@ -2,8 +2,8 @@
 This app shows a user authentication strategy using [OAuth 2.0](https://oauth.net/2/) and [OpenID Connect](https://openid.net/connect/). Single Sign On with Xero can be a valuable tool to increase signup converion and pull/push important business data to a businesses General Ledger.
 
 ### Checkout the two part blog for more context
-* 1) [What travel visas teach us about software authentication](#TODO-medium-link)
-* 2) [How to build Single Sign-on (SSO) using OAuth2.0 & OpenID Connect](#TODO-medium-link)
+* 1) [What travel visas teach us about software authentication](https://devblog.xero.com/what-travel-visas-teach-us-about-software-authentication-9c9457883aed)
+* 2) [How to build Single Sign-on (SSO) using OAuth2.0 & OpenID Connect](https://devblog.xero.com/how-to-build-single-sign-on-using-oauth2-0-and-openid-connect-50d12afa4117)
 
 # <a href="https://xero-sso.herokuapp.com" target="_blank">Hosted Demo of app</a>
 ![sso-demo](/sso-vid.gif)
