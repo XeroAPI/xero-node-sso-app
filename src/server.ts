@@ -69,8 +69,8 @@ class App {
     }));
 
     // add {force: true} to sync() to reset db
-    // sequelize.sync({force: true}).then(async() => {
-    sequelize.sync().then(async() => {
+    sequelize.sync({force: true}).then(async() => {
+    // sequelize.sync().then(async() => {
       this.app.listen(process.env.PORT, () => {
         console.log(`Example app listening on port ${process.env.PORT}!`)
       });
@@ -199,6 +199,50 @@ class App {
           consentUrl: await xero.buildConsentUrl(),
           error: e
         });
+      }
+    });
+
+    router.get('/subscriptions', async (req, res) => {      
+      if (req.signedCookies.recentSession){
+        const user = await findUserWithSession(req.signedCookies.recentSession)
+        if (!user) {
+          res.redirect("/logout"); // signed cookie does not match a user
+        }
+       
+        const xeroAppStoreClient = new XeroClient({
+          clientId: process.env.APPSTORE_CLIENT_ID,
+          clientSecret: process.env.APPSTORE_CLIENT_SECRET,
+          grantType: 'client_credentials',
+          scopes: ['marketplace.billing']
+        });
+
+        console.log('xeroAppStoreClient: ', xeroAppStoreClient)
+        
+        try {
+          await xeroAppStoreClient.getClientCredentialsToken()
+        } catch(e) {
+          console.log('ERROR: ',e)
+        }
+
+        const subscriptionRequest = await xeroAppStoreClient.appStoreApi.getSubscription("03bc74f2-1237-4477-b782-2dfb1a6d8b21")
+
+        await user.update({
+          subscription: subscriptionRequest.body
+        }).then(updatedRecord => {
+          console.log(`UPDATED user ${JSON.stringify(updatedRecord.email,null,2)}`)
+          return updatedRecord
+        })
+
+        console.log('subscriptionRequest: ',subscriptionRequest.body)
+        console.log('subscriptionRequest: ',subscriptionRequest.body.plans[0].subscriptionItems)
+
+        res.render("subscriptions", {
+          user,
+          allTenants: xero.tenants
+        });
+        
+      } else {
+        res.redirect("/");
       }
     });
 

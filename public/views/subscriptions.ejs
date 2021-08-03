@@ -53,55 +53,29 @@
                 </div>
               </div>
             </div>
+            <hr>
             <div class="row">
-              <div class='col-md-12'>
-                <table id="invoice-data-table" class="display" width="100%">
-                  <thead>
-                    <tr>
-                      <th>Contact</th>
-                      <th>Type</th>
-                      <th>Due$</th>
-                      <th>Number</th>
-                      <th>Payment(s)</th>
-                      <th>Item(s)</th>
-                      <th>Xero</th>
-                    </tr>
-                </thead>
-                </table>
-                
-                <script>
-                  $(document).ready(function(){
-                    var tableData = <%- JSON.stringify(dataSet) %>
-                    $('#invoice-data-table').DataTable({
-                      data: tableData,
-                      columns: [
-                        {'data': 'ContactName'},
-                        {'data': 'Type'},
-                        {'data': 'AmountDue'},
-                        {'data': 'InvoiceNumber'},
-                        {'data': 'Payments'},
-                        {'data': 'LineItems'},
-                        { "data": "weblink",
-                          "render": function(data, type, row, meta){
-                            if(type === 'display'){
-                              data = '<a target="_blank" href="' + data + '">' + 'View in Xero' + '</a>';
-                            }
-                            return data;
-                          }
-                      }]
-                    });
-                  });
-                </script>
+              <div class='col-md-12 text-left'>
+                <h1>Information about your subscription</h1>
+
+                <!-- <%= JSON.stringify(user.subscription) %> -->
+
+                <strong>Plan: </strong><%= user.subscription.plans[0].name %>
+                <br>
+                <strong>Amount: </strong>$<%= user.subscription.plans[0].subscriptionItems[0].price.currency %>: <%= user.subscription.plans[0].subscriptionItems[0].price.amount %>
+                <br>
+                <strong>Plan Start: </strong><%= user.subscription.startDate %>
+                <br>
+                <strong>Current Period End: </strong><%= user.subscription.currentPeriodEnd %>
+                <br>
+                <strong>Plan Status: </strong><%= user.subscription.status %>
+                <br>
               </div>
             </div>
-            <hr>
             <br>
             <div class="row text-center">
-              <div class='col-md-6'>
+              <div class='col-md-12'>
                 <a href='/logout'>Logout</a>
-              </div>
-              <div class='col-md-6'>
-                <a href='/subscriptions'>View your subscription</a>
               </div>
             </div>
           </div>
@@ -112,5 +86,5 @@
 </html>
 
 <script>
-  window.history.pushState("", "", '/dashboard');
+  window.history.pushState("", "", '/subscriptions');
 </script>
