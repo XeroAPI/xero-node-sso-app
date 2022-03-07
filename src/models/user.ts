@@ -11,6 +11,7 @@ class User extends Model {
   public active_tenant!: string;
   public decoded_id_token!: string;
   public token_set!: TokenSet;
+  public subscription: string;
   public session!: string;
 }
 

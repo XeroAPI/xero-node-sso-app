@@ -66,6 +66,9 @@ User.init(
     token_set: {
       type: DataTypes.JSONB
     },
+    subscription: {
+      type: DataTypes.JSONB
+    },
     session: {
       type: DataTypes.STRING
     }
