@@ -224,7 +224,8 @@ class App {
           console.log('ERROR: ',e)
         }
 
-        const subscriptionRequest = await xeroAppStoreClient.appStoreApi.getSubscription("03bc74f2-1237-4477-b782-2dfb1a6d8b21")
+        const subscriptionId = process.env.SUBSCRIPTION_ID
+        const subscriptionRequest = await xeroAppStoreClient.appStoreApi.getSubscription(subscriptionId)
 
         await user.update({
           subscription: subscriptionRequest.body

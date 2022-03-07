@@ -22,13 +22,14 @@
     "nodemon": "^2.0.4",
     "pg": "^8.4.0",
     "sequelize": "^6.3.5",
-    "xero-node": "^4.7.4"
+    "xero-node": "^4.19.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.2",
     "@types/express-session": "^1.15.16",
     "@types/node": "^13.1.8",
     "openid-client": "^3.14.0",
+    "sequelize-cli": "^6.4.1",
     "ts-lint": "^4.5.1",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.7.5"
